@@ -121,7 +121,7 @@ Update `tsconfig.app.json` path mapping (optional) if you like `@env/` alias; we
 
 Generate a layout module and components:
 ```bash
-ng g m layout --flat=false --module app.module
+ng g m layout --flat=false --module app-module
 ng g c layout/shell --export
 ng g c layout/navbar --export
 ```
@@ -199,11 +199,11 @@ export class NavbarComponent {
 ## 7) Feature modules
 Generate example feature modules + routes + example components:
 ```bash
-ng g m features/opd --route opd --module app-routing.module
-ng g m features/labs --route labs --module app-routing.module
-ng g m features/billing --route billing --module app-routing.module
-ng g m features/inventory --route inventory --module app-routing.module
-ng g m features/hr --route hr --module app-routing.module
+ng g m features/opd --route opd --module app-routing-module
+ng g m features/labs --route labs --module app-routing-module
+ng g m features/billing --route billing --module app-routing-module
+ng g m features/inventory --route inventory --module app-routing-module
+ng g m features/hr --route hr --module app-routing-module
 
 # Sample pages inside features
 ng g c features/opd/pages/opd-home --module features/opd
