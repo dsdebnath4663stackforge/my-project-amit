@@ -19,32 +19,46 @@ ng new hms-dashboard \
   --no-standalone
 
 cd hms-dashboard
-
-# 2.2 Add Tailwind CSS
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+ 
 ```
 
-**Edit `tailwind.config.js`**
-```js
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{html,ts}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+---
+
+##  Install Tailwind CSS & PostCSS
+
+Run the following command in your project root:
+
+```bash
+npm install tailwindcss @tailwindcss/postcss postcss --force
+```
+
+---
+
+##  Configure PostCSS Plugins
+
+Create a file named **`.postcssrc.json`** in the **root** of your project and add this configuration:
+
+```json
+{
+  "plugins": {
+    "@tailwindcss/postcss": {}
+  }
 }
 ```
 
-**Edit `src/styles.css`** (add Tailwind layers)
+---
+
+##  Import Tailwind CSS
+
+Open or create your **`src/styles.css`** file and add the Tailwind import:
+
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
+
+---
+
+ 
 
 ---
 
@@ -81,8 +95,8 @@ src/
       notifications/         # system notifications
       app.state.ts
       app.reducers.ts
-    app-routing.module.ts
-    app.module.ts
+    app-routing-module.ts
+    app-module.ts
     environments/
       environment.ts
       environment.development.ts
@@ -300,7 +314,7 @@ export class OpdHomeComponent {
 
 ## 8) App routing to use the shell layout
 
-**`src/app/app-routing.module.ts`**
+**`src/app/app-routing-module.ts`**
 ```ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -580,12 +594,12 @@ Register effects in root (next section).
 
 ## 10) Root AppModule with Store, Effects, RouterStore, DevTools
 
-**`src/app/app.module.ts`**
+**`src/app/app-module.ts`**
 ```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing-module';
 import { AppComponent } from './app.component';
 
 // Layout
@@ -660,7 +674,7 @@ export class RoleGuard implements CanActivate {
 }
 ```
 
-Apply it to an admin route (e.g., HR module) in **`app-routing.module.ts`**:
+Apply it to an admin route (e.g., HR module) in **`app-routing-module.ts`**:
 ```ts
 { path: 'hr', loadChildren: () => import('./features/hr/hr.module').then(m => m.HrModule), canActivate: [RoleGuard], data: { roles: ['ADMIN'] } },
 ```
@@ -775,14 +789,14 @@ ng add @ngrx/store@latest
 ng add @ngrx/effects@latest
 ng add @ngrx/store-devtools@latest
 ng add @ngrx/router-store@latest
-ng g m layout --module app.module
+ng g m layout --module app-module
 ng g c layout/shell --export
 ng g c layout/navbar --export
-ng g m features/opd --route opd --module app-routing.module
-ng g m features/labs --route labs --module app-routing.module
-ng g m features/billing --route billing --module app-routing.module
-ng g m features/inventory --route inventory --module app-routing.module
-ng g m features/hr --route hr --module app-routing.module
+ng g m features/opd --route opd --module app-routing-module
+ng g m features/labs --route labs --module app-routing-module
+ng g m features/billing --route billing --module app-routing-module
+ng g m features/inventory --route inventory --module app-routing-module
+ng g m features/hr --route hr --module app-routing-module
 ng g c features/opd/pages/opd-home --module features/opd
 ng g c features/labs/pages/labs-home --module features/labs
 ng g c features/billing/pages/billing-home --module features/billing
